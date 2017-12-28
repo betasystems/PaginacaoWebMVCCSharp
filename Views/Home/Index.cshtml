@@ -1,0 +1,51 @@
+﻿@model PaginacaoWebMVCCSharp.Models.PesquisaTeste
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Coluna 1</th>
+                <th>Coluna 2</th>
+                <th>Coluna 3</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.ListaPesquisaTeste == null || Model.ListaPesquisaTeste.Count == 0)
+            {
+                <tr>
+                    <td colspan="6" class="text-center">NÃO HÁ RESULTADO A SER MOSTRADO.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var dtoListaPesquisaTeste in Model.ListaPesquisaTeste)
+                {
+                    <tr>
+                        <td title="@dtoListaPesquisaTeste.Propriedade1">@dtoListaPesquisaTeste.Propriedade1</td>
+                        <td title="@dtoListaPesquisaTeste.Propriedade2">@dtoListaPesquisaTeste.Propriedade2</td>
+                        <td title="@dtoListaPesquisaTeste.Propriedade3">@dtoListaPesquisaTeste.Propriedade3</td>
+                        <td>
+                            <ul>
+                                <li>
+                                    <a href="~/Atualizar/@dtoListaPesquisaTeste.Id">
+                                        <input type="button" class="btn" value="Atualizar" />
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="~/Excluir/@dtoListaPesquisaTeste.Id">
+                                        <input type="button" class="btn" value="Excluir" />
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@if (Model.ListaPesquisaTeste != null && Model.ListaPesquisaTeste.Count > 0)
+{
+    Html.RenderPartial("_Paginador", Model);
+}

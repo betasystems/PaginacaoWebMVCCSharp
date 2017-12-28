@@ -1,0 +1,43 @@
+﻿@model PaginacaoWebMVCCSharp.Models.InterfacePesquisaBase
+
+@{
+    if ((bool)ViewData["Inativo"])
+    {
+        var classeHtml = string.Empty;
+
+        if ((bool)ViewData["Selecionado"])
+        {
+            classeHtml = "active";
+        }
+
+        if (ViewData["Icone"] == null)
+        {
+            <li class="disabled @Html.Raw(classeHtml)">
+                <span>@ViewData["Texto"]</span>
+            </li>
+        }
+        else
+        {
+            <li class="disabled @Html.Raw(classeHtml)">
+                <span>@Html.Raw(ViewData["Icone"].ToString())</span>
+            </li>
+        }
+    }
+    else
+    {
+        var dadosRoteamento = new RouteValueDictionary { { "Area", ViewContext.RouteData.DataTokens["area"] }, { "pagina", ViewData["PageIndex"].ToString() } };
+
+        <li>
+            @if (ViewData["Icone"] == null)
+                {
+                @Html.ActionLink(ViewData["Texto"].ToString(), ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["controller"].ToString(), dadosRoteamento, null);
+                }
+                else
+                {
+                <a href="@Url.Action(ViewContext.RouteData.Values["action"].ToString(), ViewContext.RouteData.Values["controller"].ToString(), dadosRoteamento)" )>
+                    @Html.Raw(ViewData["Icone"].ToString())
+                </a>
+            }
+        </li>
+    }
+}

@@ -1,0 +1,28 @@
+﻿@model PaginacaoWebMVCCSharp.Models.InterfacePesquisaBase
+
+<div class="row">
+    <div class="col-xs-12 col-md-12 text-center">
+        <ul class="pagination pagination-bordered">
+            @{
+                Html.RenderPartial("_Paginacao", Model, new ViewDataDictionary { { "Icone", "<i class=\"fa fa-angle-left\"></i>" }, { "PageIndex", Model.PaginaAtual - 1 }, { "Selecionado", false }, { "Inativo", Model.PaginaAtual == 1 } });
+
+                var indexInicioPagina = Math.Max(1, Model.PaginaAtual - 10 / 2);
+                var indexFinalPagina = Math.Min(Model.RegistrosTotal, Model.PaginaAtual + 10 / 2);
+
+                var totalPaginas = (Model.RegistrosTotal + Model.RegistrosPagina - 1) / Model.RegistrosPagina;
+
+                if (indexFinalPagina > totalPaginas)
+                {
+                    indexFinalPagina = totalPaginas;
+                }
+
+                for (var i = indexInicioPagina; i <= indexFinalPagina; i++)
+                {
+                    Html.RenderPartial("_Paginacao", Model, new ViewDataDictionary { { "Texto", i }, { "PageIndex", i }, { "Selecionado", i == Model.PaginaAtual }, { "Inativo", i == Model.PaginaAtual } });
+                }
+
+                Html.RenderPartial("_Paginacao", Model, new ViewDataDictionary { { "Icone", "<i class=\"fa fa-angle-right\"></i>" }, { "PageIndex", Model.PaginaAtual + 1 }, { "Selecionado", false }, { "Inativo", Model.PaginaAtual == totalPaginas } });
+            }
+        </ul>
+    </div>
+</div>
